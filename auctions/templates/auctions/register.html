@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <div class="container-sm">
+    <br><br>
+    <div class="text-center">
+      <h6>Join Auctions</h6>
+      <h2>Create your account</h2>
+    </div>
+    <br>
+    <div class="container-sm" style="width:70%;">
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input class="form-control" minlength="3" autofocus type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder="Email Address">
+            </div>
+            <div class="form-group">
+                <input class="form-control" minlength="8"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" type="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" type="password" name="confirmation" placeholder="Confirm Password" required>
+            </div>
+            <input class="btn btn-primary" style="width:100%;" type="submit" value="Register">
+        </form>
+        <br>
+        Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    </div>
+
+  </div>
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="display-4">Bid Failed<br>Some one bid more than you.</h1>
+    <hr class="my-4">
+    <a class="btn btn-primary btn-lg"href="{% url 'index' %}">Back to Items</a>
+    <a class="btn btn-primary btn-lg"href="{% url 'item' item.id %}">Bid Agien</a>
+  </div>
+</div>
+
+
+
+{% endblock %}

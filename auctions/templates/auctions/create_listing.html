@@ -1,0 +1,42 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <br>
+  <form class="container forms" action="#" method="post">
+    {% csrf_token %}
+    <br>
+    <label for="title" class="form-label">Product title</label>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" minlength="4" maxlength="20" name = "title" id="title" placeholder="title" aria-label="Title" aria-describedby="basic-addon1" required>
+    </div>
+
+    <label for="basic-url" class="form-label">Product image URL</label>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
+      <input type="url" class="form-control" name="image_url"id="basic-url" aria-describedby="basic-addon3">
+    </div>
+    <div class="form-group mb-3 block">
+      <label for="category">Categories</label><br>
+      <select name = category class="form-select block" size="3" multiple aria-label="multiple select example">
+        {% for category in categories %}
+          <option value="{{category}}">{{category}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <label for="starting_bid" class="form-label">Starting Bid</label>
+    <div class="input-group mb-3">
+      <span class="input-group-text">$</span>
+      <input type="number" step=0.01 name="starting_bid" id="starting_bid"  required name="starting_bid" class="form-control" aria-label="Amount (to the nearest dollar)">
+      <span class="input-group-text">.00</span>
+    </div>
+
+    <label for="details" class="form-label">Details</label>
+    <div class="form-floating">
+      <textarea maxlength="250" and minlength="20"  class="form-control" id="details" name="details" required placeholder="Leave details about the product here" id="floatingTextarea2" style="height: 75px"></textarea>
+    </div><br>
+    <div class="text-right">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div><br>
+  </form>
+
+{% endblock %}

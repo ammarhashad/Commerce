@@ -1,0 +1,60 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <br>
+  <div class="container ">
+    <div class="row row-cols-2 row-cols-md-3 g-4">
+      {% for c in categories %}
+        <div  style = "margin-bottom:15px;"class="col">
+          <div class="card text-center">
+            <div class="card-body">
+              <a class="btn btn-primary btn-block" href="{% url 'category' c %}">{{c}}</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if categories %}
+      <p style="border-top: 1px solid black;"></p>
+    {% else %}
+      <h1 class="text-center display-4 alert alert-primary">{{category}}</h1>
+    {% endif %}
+
+    {% if not products%}
+      <h1>Coming soon.</h1>
+    {% endif %}
+    <div class="row">
+      {% for product in products %}
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div style = "padding-right:15px;"class="card" style="width: 18rem;">
+              <br><h4 class="card-title text-center">{{product.title}}</h4><br>
+              <div style="border-bottom: 1px solid black;margin-left:auto;margin-right:auto;padding-bottom:10px;">
+                <div style="height:300px;width:250px;background:url('{{product.image_url}}');background-position:50%;background-size:cover;margin-right:auto;margin-left:auto;">
+                </div>
+              </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><h5 style="font-size:1rem;display:inline;">Current Bid:</h5>{% for p in product.bids.all %}{% if forloop.last %}  {{p.bid}} {% endif %} {% empty %} {{product.starting_bid}}{% endfor %} $</li>
+                </ul>
+                  <div class="card-body">
+                    <a href="{% url 'item' product.id 0 %}" class="card-link">View</a>
+                    {% if not  product.close %}
+                      {% if user.is_authenticated and not  product in user.Watchlist.all or  not user.is_authenticated %}
+                      <a href="{% url 'watchlist_controll' product.id  1 %}" {% if  not user.is_authenticated %} style="pointer-events:none;cursor:default;color:gray" {% endif %} class="card-link float-right">Watchlist</a>
+                      {% else %}
+                      <a href="{% url 'watchlist_controll' product.id 0 %}" class="card-link float-right">Remove Watchlist</a>
+                      {% endif %}
+                    {% else %}
+                    <a style="pointer-events:none;cursor:default;color:#700c06;" class="card-link float-right">Closed</a>
+                    {% endif %}
+                  </div>
+
+              </div><br>
+            </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+{% endblock %}

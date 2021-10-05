@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>{% block title %}Auctions{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="svg" sizes="16x16" href="{% static 'images/auction.svg' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"> 
+  <link href="{% static 'auctions/stylee.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="navbar  navbar-expand-lg  navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'images/auction.svg' %}" alt="" width="35" height="28" class="d-inline-block align-top logo">
+        Auctions
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 mr-auto">
+          <li class="nav-item">
+            <a class="nav-link active"  aria-current="page" href="{% url 'index' %}">Active Listings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  aria-current="page" href="{% url 'All' %}">All Listings</a>
+          </li>
+
+          {% if not user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+        </ul>
+
+        <ul lass="navbar-nav ml-auto">
+          <li class="nav-item dropdown navbar-text mr-auto">
+            <a class="nav-link" href="">Not signed in.</a>
+            {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'category' "n" %}">Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
+          </li>
+
+        </ul>
+
+        <ul lass="navbar-nav ml-auto">
+          <li class="nav-item dropdown navbar-text mr-auto">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i>Signed in as</i> {{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark bg-primary " aria-labelledby="navbarDarkDropdownMenuLink">
+              <li><a class="dropdown-item" href="{% url 'watchlist' %}">Watchlist</a></li>
+              <li><a class="dropdown-item" href="{% url 'my_item' %}">My items</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+    
+  </nav>
+
+  {% block body %}
+
+  {% endblock %}
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
